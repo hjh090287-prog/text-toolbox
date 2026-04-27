@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TextToolBox | All-in-One Professional Text Utility Suite</title>
+  <meta name="description" content="Free online text tools: word counter, character counter, case converter, remove extra spaces, slug generator, and more. All-in-one toolbox for writers and developers.">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050505;
+      --card: #111;
+      --border: rgba(255,255,255,0.1);
+      --accent: #00d2ff;
+      --accent-grad: linear-gradient(135deg, #00d2ff, #3a7bd5);
+      --text: #fff;
+      --text-dim: rgba(255,255,255,0.6);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 280px;
+      background: #0a0a0a;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: sticky; top: 0; height: 100vh;
+    }
+    .logo {
+      padding: 30px;
+      font-size: 1.5rem; font-weight: 800; letter-spacing: -1px;
+      background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .tool-nav { flex: 1; overflow-y: auto; padding: 10px; }
+    .tool-link {
+      display: block; padding: 12px 20px; text-decoration: none;
+      color: var(--text-dim); font-size: 0.9rem; font-weight: 500;
+      border-radius: 8px; margin-bottom: 4px; transition: 0.2s;
+    }
+    .tool-link:hover { background: rgba(255,255,255,0.05); color: #fff; }
+    .tool-link.active { background: var(--accent-grad); color: #fff; }
+
+    /* CONTENT */
+    main { flex: 1; padding: 40px; max-width: 1000px; margin: 0 auto; }
+    .header { margin-bottom: 40px; }
+    .header h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
+    .header p { color: var(--text-dim); }
+
+    /* WORKSPACE */
+    .workspace {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 30px;
+    }
+    textarea {
+      width: 100%; height: 300px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: #fff; font-family: 'Courier New', Courier, monospace;
+      padding: 20px; font-size: 1rem; line-height: 1.6;
+      resize: vertical; margin-bottom: 20px;
+    }
+    textarea:focus { outline: none; border-color: var(--accent); }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: flex; gap: 20px; margin-bottom: 20px;
+    }
+    .stat-pill {
+      background: rgba(255,255,255,0.05);
+      padding: 8px 16px; border-radius: 100px;
+      font-size: 0.8rem; color: var(--text-dim);
+      border: 1px solid var(--border);
+    }
+    .stat-pill span { color: var(--accent); font-weight: 700; }
+
+    /* ACTIONS */
+    .actions { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+    button {
+      padding: 12px; background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border); border-radius: 8px;
+      color: #fff; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: 0.2s;
+    }
+    button:hover { background: var(--accent-grad); border-color: transparent; }
+
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="logo">TextToolBox</div>
+  <div class="tool-nav">
+    <a href="#" class="tool-link active">General Text Suite</a>
+    <a href="#" class="tool-link">HTML Entity Encoder</a>
+    <a href="#" class="tool-link">JSON Formatter</a>
+    <a href="#" class="tool-link">Slug Generator</a>
+    <a href="#" class="tool-link">Remove Extra Spaces</a>
+    <a href="#" class="tool-link">Base64 Encoder</a>
+    <a href="#" class="tool-link">Lorem Ipsum Gen</a>
+    <a href="#" class="tool-link">Diff Checker</a>
+  </div>
+</div>
+
+<main>
+  <div class="header">
+    <h1 id="toolTitle">Professional Text Utility</h1>
+    <p>Real-time character counting, case conversion, and text cleaning.</p>
+  </div>
+
+  <div class="workspace">
+    <div class="stats-bar">
+      <div class="stat-pill">Characters: <span id="charCount">0</span></div>
+      <div class="stat-pill">Words: <span id="wordCount">0</span></div>
+      <div class="stat-pill">Lines: <span id="lineCount">0</span></div>
+    </div>
+
+    <textarea id="textInput" placeholder="Paste your text here..."></textarea>
+
+    <div class="actions">
+      <button onclick="transform('upper')">UPPERCASE</button>
+      <button onclick="transform('lower')">lowercase</button>
+      <button onclick="transform('title')">Title Case</button>
+      <button onclick="transform('sentence')">Sentence case</button>
+      <button onclick="transform('slug')">URL-Slug</button>
+      <button onclick="transform('clean')">Remove Spaces</button>
+      <button onclick="copyText()" style="background: var(--accent-grad);">Copy Text</button>
+      <button onclick="clearText()" style="background: #ff4757;">Clear</button>
+    </div>
+  </div>
+
+  <footer style="margin-top: 60px; text-align: center; font-size: 0.8rem; color: var(--text-dim); border-top: 1px solid var(--border); padding-top: 30px;">
+    <p>&copy; 2026 TextToolBox — Professional Utilities Suite. All rights reserved.<br>
+    <a href="about.html" style="color: inherit; margin: 0 10px;">About Us</a> | <a href="privacy.html" style="color: inherit; margin: 0 10px;">Privacy Policy</a></p>
+  </footer>
+</main>
+
+<script>
+  const input = document.getElementById('textInput');
+  const charC = document.getElementById('charCount');
+  const wordC = document.getElementById('wordCount');
+  const lineC = document.getElementById('lineCount');
+
+  input.addEventListener('input', () => {
+    const text = input.value;
+    charC.innerText = text.length;
+    wordC.innerText = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
+    lineC.innerText = text.split('\n').length;
+  });
+
+  function transform(type) {
+    let val = input.value;
+    switch(type) {
+      case 'upper': val = val.toUpperCase(); break;
+      case 'lower': val = val.toLowerCase(); break;
+      case 'title': val = val.toLowerCase().split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' '); break;
+      case 'sentence': val = val.toLowerCase().replace(/(^\s*\w|[\.\!\?]\s*\w)/g, c => c.toUpperCase()); break;
+      case 'slug': val = val.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-'); break;
+      case 'clean': val = val.replace(/\s+/g, ' ').trim(); break;
+    }
+    input.value = val;
+  }
+
+  function copyText() {
+    input.select();
+    document.execCommand('copy');
+    alert('Copied to clipboard!');
+  }
+
+  function clearText() {
+    input.value = '';
+    charC.innerText = 0; wordC.innerText = 0; lineC.innerText = 0;
+  }
+</script>
+
+</body>
+</html>
